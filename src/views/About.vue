@@ -13,6 +13,7 @@
         <button class="btn btn-primary m-1" @click="handleAuth">
             Log in
         </button>
+        <div> abcdefg </div>
     </div>
   </div>
 </template>
