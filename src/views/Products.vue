@@ -32,18 +32,18 @@
 </template>
 
 <script>
-//  import { mapActions, mapState } from 'vuex'
+import { mapActions } from 'vuex'
 import { required } from 'vuelidate/lib/validators'
 
 export default {
   data () {
     return {
       product: {
-        name: null,
-        description: null,
-        price: null,
+        name: 'ppp',
+        description: 'ddd',
+        price: 2.5,
         image: null,
-        category: null
+        category: 1
       }
     }
   },
@@ -56,17 +56,21 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['addProduct']),
     onFileSelected (e) {
       this.product.image = e.target.files[0]
     },
     async handleProduct () {
-      this.$v.$touch()
-      if (!this.$v.$invalid) {
-        const product = new FormData()
-        product.append('Price', this.product.price)
-        product.append('ImageUpload', this.product.image)
-        this.$router.push('/products')
-      }
+      const product = new FormData()
+      console.log(`name: ${this.product.name}, d: ${this.product.description}`)
+      product.append('Name', this.product.name)
+      product.append('Description', this.product.description)
+      product.append('Price', this.product.price)
+      product.append('CategoryId', this.product.category)
+      //  product.append('Image', this.product.image.name)
+      product.append('ImageUpload', this.product.image)
+      await this.addProduct(product)
+      this.$router.push('/about')
     }
   }
 }
